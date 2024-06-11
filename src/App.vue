@@ -1,26 +1,53 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <b-container>
+      <b-row>
+        <b-col>
+          <!-- <b-button @click="showInbox">Inbox</b-button>
+          <b-button @click="showTask">Task</b-button> -->
+        </b-col>
+      </b-row>
+    </b-container>
+    <MessageModule v-if="showInboxModal" @close="closeModal('inbox')"/>
+    <TaskModule v-if="showTaskModal" @close="closeModal('task')"/>
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MessageModule from "./components/MessageModule";
+import TaskModule from "./components/TaskModule";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    MessageModule,
+    TaskModule
+  },
+  data() {
+    return {
+      showInboxModal: false,
+      showTaskModal: false
+    };
+  },
+  methods: {
+    showInbox() {
+      this.showInboxModal = true;
+    },
+    showTask() {
+      this.showTaskModal = true;
+    },
+    closeModal(modal) {
+      if (modal === "inbox") {
+        this.showInboxModal = false;
+      } else if (modal === "task") {
+        this.showTaskModal = false;
+      }
+    }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+/* Any additional custom styles can go here */
 </style>
